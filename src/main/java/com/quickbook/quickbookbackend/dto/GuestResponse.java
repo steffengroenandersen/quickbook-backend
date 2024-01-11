@@ -2,7 +2,7 @@ package com.quickbook.quickbookbackend.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.quickbook.quickbookbackend.entity.User;
+import com.quickbook.quickbookbackend.entity.Guest;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserResponse {
+public class GuestResponse {
     private String username;
 
     private String email;
@@ -28,12 +28,12 @@ public class UserResponse {
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private LocalDateTime edited;
 
-    public UserResponse(User user) {
-        this.username = user.getUsername();
-        this.email = user.getEmail();
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
-        this.created = user.getCreated();
-        this.edited = user.getEdited();
+    public GuestResponse(Guest guest) {
+        this.username = guest.getUsername();
+        this.email = guest.getEmail();
+        this.firstName = guest.getFirstName();
+        this.lastName = guest.getLastName();
+        this.created = guest.getCreated();
+        this.edited = guest.getEdited();
     }
 }

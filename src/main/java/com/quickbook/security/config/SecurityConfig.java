@@ -76,9 +76,9 @@ public class SecurityConfig {
             .requestMatchers(mvcMatcherBuilder.pattern("/error")).permitAll()
             
             // USER ENDPOINTS
-            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/users")).permitAll() // ANONYMOUS
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/guests")).permitAll() // ANONYMOUS
 
-            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/users/pageable")).permitAll() // ANONYMOUS
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/guests/pageable")).permitAll() // ANONYMOUS
 
 
             //This is for demo purposes only, and should be removed for a real system

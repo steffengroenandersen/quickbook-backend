@@ -45,13 +45,13 @@ public class ControllerToTestRoles {
     @PreAuthorize("hasAuthority('USER')")
     @GetMapping("/user")
     public TestResponse getUserUser(Principal principal) {
-        return new TestResponse(userWithRolesService.getUserWithRoles(principal.getName()).getUserName(),"User");
+        return new TestResponse(userWithRolesService.getUserWithRoles(principal.getName()).getUserName(),"Guest");
     }
 
     @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
     @GetMapping("/useradmin")
     public TestResponse getUserOrAdminUser(Principal principal) {
-        return new TestResponse(userWithRolesService.getUserWithRoles(principal.getName()).getUserName(),"User and/or Amin");
+        return new TestResponse(userWithRolesService.getUserWithRoles(principal.getName()).getUserName(),"Guest and/or Amin");
     }
 
     @GetMapping("/authenticated")
