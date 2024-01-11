@@ -14,6 +14,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -110,7 +111,7 @@ public class DeveloperData implements ApplicationRunner {
     
     public List<Reservation> generateReservations(Guest guest, List<Hotel> hotels){
         List<Reservation> reservations = new ArrayList<>();
-        LocalDateTime reservationDate = LocalDateTime.now();
+        LocalDate reservationDate = LocalDate.now();
         
         Reservation reservation1 = new Reservation(guest, hotels.get(0).getRooms().get(0), reservationDate);
         Reservation reservation2 = new Reservation(guest, hotels.get(0).getRooms().get(0), reservationDate);

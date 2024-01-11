@@ -1,10 +1,12 @@
 package com.quickbook.quickbookbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -32,10 +34,11 @@ public class Reservation {
     @ManyToOne
     @JoinColumn(name = "room_id")
     Room room;
-    
-    private LocalDateTime reservationDate;
 
-    public Reservation(Guest guest, Room room, LocalDateTime reservationDate) {
+    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
+    private LocalDate reservationDate;
+
+    public Reservation(Guest guest, Room room, LocalDate reservationDate) {
         this.guest = guest;
         this.room = room;
         this.reservationDate = reservationDate;
