@@ -9,7 +9,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HotelRequest {
-    private int id;
     private String name;
     private String street;
     private String city;
@@ -20,11 +19,10 @@ public class HotelRequest {
     public static Hotel getHotelEntity(HotelRequest hotelRequest){
         return new Hotel(
                 hotelRequest.getName(),
-                hotelRequest.getStreet(),
+                hotelRequest.getStreet(),   
                 hotelRequest.getCity(),
                 hotelRequest.getZip(),
-                hotelRequest.getCountry(),
-                hotelRequest.getNumberOfRooms()
+                hotelRequest.getCountry()
         );
     }
 }

@@ -2,9 +2,14 @@ package com.quickbook.quickbookbackend.service;
 
 import com.quickbook.quickbookbackend.dto.HotelRequest;
 import com.quickbook.quickbookbackend.dto.HotelResponse;
+import com.quickbook.quickbookbackend.dto.RoomRequest;
 import com.quickbook.quickbookbackend.entity.Hotel;
+import com.quickbook.quickbookbackend.entity.Room;
 import com.quickbook.quickbookbackend.repository.HotelRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -35,22 +40,18 @@ public class HotelService {
         Optional<Hotel> optionalHotel = hotelRepository.findById(id);
         
         if(!optionalHotel.isPresent()){
-            throw new NoSuchElementException("Hotel not found with id: " + id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hotel not found with id: " + id);
         }
         
         return new HotelResponse(optionalHotel.get());
     }
     
-    public HotelResponse updateHotel(HotelRequest hotelRequest){
+    public HotelResponse updateHotel(Integer id, HotelRequest hotelRequest){
         
-        Integer id = hotelRequest.getId();
-        if (id == null) {
-            throw new NoSuchElementException("Hotel ID is required for update");
-        }
-        
-        Optional<Hotel> optionalHotel = hotelRepository.findById(hotelRequest.getId());        
+        Optional<Hotel> optionalHotel = hotelRepository.findById(id);        
         if (optionalHotel.isEmpty()) {
-            throw new NoSuchElementException("Hotel not found with id: " + id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hotel not found with id: " + id);
+
         }
         
         Hotel savedHotel = optionalHotel.get();
@@ -74,13 +75,45 @@ public class HotelService {
         if (!Objects.equals(hotelRequest.getCity(), savedHotel.getCountry())) {
             savedHotel.setCountry(hotelRequest.getCountry());
         }
-
-        if (!Objects.equals(hotelRequest.getNumberOfRooms(), savedHotel.getNumberOfRooms())) {
-            savedHotel.setNumberOfRooms(hotelRequest.getNumberOfRooms());
-        }
         
         hotelRepository.save(savedHotel);
         return new HotelResponse(savedHotel);
     }
+    
+    public HotelResponse deleteHotel(Integer id){
+        Optional<Hotel> optionalHotel = hotelRepository.findById(id);
+        if (optionalHotel.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hotel not found with id: " + id);
+        }
+        
+        Hotel savedHotel = optionalHotel.get();
+        
+        // TODO: Create ReservationService method that checks of a hotels associated rooms have reservations and return boolean
+        boolean checkHotel = false;
+        if (checkHotel) {
+            //throw new IllegalStateException("Cannot delete hotel with rooms having reservations");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Cannot delete hotel with rooms having reservations");
+        }
+        
+        hotelRepository.delete(savedHotel);
+        return new HotelResponse(savedHotel);
+    }
+    
+    public HotelResponse createRoom(Integer id, RoomRequest roomRequest){
+        Optional<Hotel> optionalHotel = hotelRepository.findById(id);
+        if (optionalHotel.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hotel not found with id: " + id);
+        }
+
+        Hotel savedHotel = optionalHotel.get();
+        
+        savedHotel.addRoom(roomRequest);
+        
+        hotelRepository.save(savedHotel);
+        
+        return new HotelResponse(savedHotel);
+    }    
+    
+
     
 }

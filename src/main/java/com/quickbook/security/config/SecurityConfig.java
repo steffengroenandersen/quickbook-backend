@@ -83,8 +83,13 @@ public class SecurityConfig {
             // HOTEL ENDPOINTS
             .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/hotels")).permitAll() // ANONYMOUS
             .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/hotels/{id}")).permitAll() // ANONYMOUS
-            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/hotels")).hasAuthority("ADMIN") // ANONYMOUS
-            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.PATCH, "/api/hotels")).permitAll() // ANONYMOUS
+            
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/hotels")).hasAuthority("ADMIN") // ADMIN
+            
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/hotels/{id}/rooms")).permitAll() // ANONYMOUS
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.PATCH, "/api/hotels/{id}")).permitAll() // ANONYMOUS
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.DELETE, "/api/hotels/{id}")).permitAll() // ANONYMOUS
+
             
 
             

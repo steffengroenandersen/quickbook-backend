@@ -1,9 +1,6 @@
 package com.quickbook.quickbookbackend.api;
 
-import com.quickbook.quickbookbackend.dto.GuestRequest;
-import com.quickbook.quickbookbackend.dto.GuestResponse;
-import com.quickbook.quickbookbackend.dto.HotelRequest;
-import com.quickbook.quickbookbackend.dto.HotelResponse;
+import com.quickbook.quickbookbackend.dto.*;
 import com.quickbook.quickbookbackend.service.HotelService;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,9 +34,20 @@ public class HotelController {
         return hotelService.createHotel(hotelRequest);
     }
     
-    @PatchMapping()
-    public HotelResponse updateHotel(@RequestBody HotelRequest hotelRequest){
-        return hotelService.updateHotel(hotelRequest);
+    @PatchMapping("/{id}")
+    public HotelResponse updateHotel(@PathVariable Integer id, @RequestBody HotelRequest hotelRequest){
+        return hotelService.updateHotel(id, hotelRequest);
+    }
+    
+    @DeleteMapping("/{id}")
+    public HotelResponse deleteHotel(@PathVariable Integer id){
+        return hotelService.deleteHotel(id);
+    }
+    
+    @PostMapping("/{id}/rooms")
+    public HotelResponse createRoom(@PathVariable Integer id, @RequestBody RoomRequest roomRequest){
+        return hotelService.createRoom(id, roomRequest);
     }
 
+    
 }

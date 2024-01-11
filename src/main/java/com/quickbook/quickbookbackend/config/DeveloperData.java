@@ -1,5 +1,6 @@
 package com.quickbook.quickbookbackend.config;
 
+import com.quickbook.quickbookbackend.dto.RoomRequest;
 import com.quickbook.quickbookbackend.entity.Guest;
 import com.quickbook.quickbookbackend.entity.Hotel;
 import com.quickbook.quickbookbackend.entity.Reservation;
@@ -51,7 +52,7 @@ public class DeveloperData implements ApplicationRunner {
         List<Hotel> hotels = generateHotels();
         
         // Generate and save reservations
-        List<Reservation> reservations = generateReservations(guest1, hotels);
+        //List<Reservation> reservations = generateReservations(guest1, hotels);
         
         
                 
@@ -68,12 +69,21 @@ public class DeveloperData implements ApplicationRunner {
             int zip = 1000;
             String country = "Denmark";
             
-            Hotel newHotel = new Hotel(name, street, city, zip, country, 10);
+            Hotel newHotel = new Hotel(name, street, city, zip, country);
             hotels.add(newHotel);
         }
 
         // Generate rooms for hotels and set them
         for(Hotel hotel : hotels){
+            
+            RoomRequest roomRequest1 = new RoomRequest(2);
+            RoomRequest roomRequest2 = new RoomRequest(2);
+            RoomRequest roomRequest3 = new RoomRequest(2);
+            hotel.addRoom(roomRequest1);
+            hotel.addRoom(roomRequest2);
+            hotel.addRoom(roomRequest3);
+            
+            /*
             List<Room> roomsToAdd = new ArrayList<>();
             
             Room room1 = new Room(1, 2);
@@ -87,7 +97,9 @@ public class DeveloperData implements ApplicationRunner {
             hotel.setRooms(roomsToAdd);
             
             // Save rooms
-            roomRepository.saveAll(roomsToAdd);
+            //roomRepository.saveAll(roomsToAdd);
+             */
+
         }
         
         // Save hotels

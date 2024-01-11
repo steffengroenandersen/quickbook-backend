@@ -1,5 +1,6 @@
 package com.quickbook.quickbookbackend.entity;
 
+import com.quickbook.quickbookbackend.dto.RoomRequest;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
