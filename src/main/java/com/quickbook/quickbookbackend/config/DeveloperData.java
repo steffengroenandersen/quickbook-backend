@@ -13,6 +13,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,55 +47,75 @@ public class DeveloperData implements ApplicationRunner {
         guest1.addRole(Role.USER);
         guestRepository.save(guest1);
         
-        // Add Hotels
-        List<Hotel> hotelList = new ArrayList<>();
+        // Generate and save hotels and rooms
+        List<Hotel> hotels = generateHotels();
         
-        Hotel hotel1 = new Hotel("Hotel1");
-        Hotel hotel2 = new Hotel("Hotel2");
-
-        // Create and set rooms for Hotel 1
-        List<Room> roomList = new ArrayList<>();
-        Room room1 = new Room();
-        Room room2 = new Room();
-
-        roomList.add(room1);
-        roomList.add(room2);
-        hotel1.setRooms(roomList);
-
-        // Create and set rooms for Hotel 2
-        List<Room> roomList1 = new ArrayList<>();
-        Room room3 = new Room();
-        Room room4 = new Room();
-        
-        roomList1.add(room3);
-        roomList1.add(room4);
-        hotel2.setRooms(roomList1);
-        
-        // Add hotels to list
-        hotelList.add(hotel1);
-        hotelList.add(hotel2);
-
-        // Save rooms and hotels
-        roomRepository.saveAll(roomList);
-        roomRepository.saveAll(roomList1);
-        hotelRepository.saveAll(hotelList);
-        
-        // Add reservation
-        Reservation reservation1 = new Reservation();
-        reservation1.setGuest(guest1);
-        reservation1.setRoom(room1);
-        reservationRepository.save(reservation1);
-        
-        Reservation reservation2 = new Reservation();
-        reservation2.setGuest(guest1);
-        reservation2.setRoom(room3);
-        reservationRepository.save(reservation2);
+        // Generate and save reservations
+        List<Reservation> reservations = generateReservations(guest1, hotels);
         
         
-
-        
-        
-        
-        
+                
     }
+    
+    public List<Hotel> generateHotels(){
+        List<Hotel> hotels = new ArrayList<>();
+        
+        // Generate hotels
+        for(int i = 1; i <= 20; i++){
+            String name = "Hotel_" + i;
+            String street = "Street_" + i;
+            String city = "City_" + i;
+            int zip = 1000;
+            String country = "Denmark";
+            
+            Hotel newHotel = new Hotel(name, street, city, zip, country, 10);
+            hotels.add(newHotel);
+        }
+
+        // Generate rooms for hotels and set them
+        for(Hotel hotel : hotels){
+            List<Room> roomsToAdd = new ArrayList<>();
+            
+            Room room1 = new Room(1, 2);
+            Room room2 = new Room(1, 2);
+            Room room3 = new Room(1, 2);
+            
+            roomsToAdd.add(room1);
+            roomsToAdd.add(room2);
+            roomsToAdd.add(room3);
+            
+            hotel.setRooms(roomsToAdd);
+            
+            // Save rooms
+            roomRepository.saveAll(roomsToAdd);
+        }
+        
+        // Save hotels
+        hotelRepository.saveAll(hotels);
+        return hotels;
+    }
+    
+    
+    public List<Reservation> generateReservations(Guest guest, List<Hotel> hotels){
+        List<Reservation> reservations = new ArrayList<>();
+        LocalDateTime reservationDate = LocalDateTime.now();
+        
+        Reservation reservation1 = new Reservation(guest, hotels.get(0).getRooms().get(0), reservationDate);
+        Reservation reservation2 = new Reservation(guest, hotels.get(0).getRooms().get(1), reservationDate);
+        Reservation reservation3 = new Reservation(guest, hotels.get(1).getRooms().get(2), reservationDate);
+        
+        reservations.add(reservation1);
+        reservations.add(reservation2);
+        reservations.add(reservation3);
+        
+        reservationRepository.saveAll(reservations);
+        
+        return reservations;
+    }
+    
+
+    
+
+    
+
 }

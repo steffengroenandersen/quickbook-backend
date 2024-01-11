@@ -32,4 +32,12 @@ public class Reservation {
     @ManyToOne
     @JoinColumn(name = "room_id")
     Room room;
+    
+    private LocalDateTime reservationDate;
+
+    public Reservation(Guest guest, Room room, LocalDateTime reservationDate) {
+        this.guest = guest;
+        this.room = room;
+        this.reservationDate = reservationDate;
+    }
 }
