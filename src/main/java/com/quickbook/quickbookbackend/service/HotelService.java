@@ -47,7 +47,6 @@ public class HotelService {
     }
     
     public HotelResponse updateHotel(Integer id, HotelRequest hotelRequest){
-        
         Optional<Hotel> optionalHotel = hotelRepository.findById(id);        
         if (optionalHotel.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hotel not found with id: " + id);
@@ -72,9 +71,16 @@ public class HotelService {
             savedHotel.setZip(hotelRequest.getZip());
         }
 
-        if (!Objects.equals(hotelRequest.getCity(), savedHotel.getCountry())) {
+        if (!Objects.equals(hotelRequest.getCountry(), savedHotel.getCountry())) {
             savedHotel.setCountry(hotelRequest.getCountry());
         }
+
+        // TODO: Determine how to handle numberOfRooms
+        /*if (!Objects.equals(hotelRequest.getNumberOfRooms(), savedHotel.getNumberOfRooms())) {
+            savedHotel.setNumberOfRooms(hotelRequest.getNumberOfRooms());
+        }
+        
+         */
         
         hotelRepository.save(savedHotel);
         return new HotelResponse(savedHotel);

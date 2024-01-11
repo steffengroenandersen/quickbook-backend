@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.quickbook.quickbookbackend.entity.Hotel;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
@@ -19,6 +21,9 @@ public class HotelResponse {
     private String country;
     private int numberOfRooms;
 
+    private List<RoomResponse> rooms;
+
+
     public HotelResponse(Hotel hotel) {
         this.id = hotel.getId();
         this.name = hotel.getName();
@@ -26,6 +31,8 @@ public class HotelResponse {
         this.city = hotel.getCity();
         this.zip = hotel.getZip();
         this.country = hotel.getCountry();
-        this.numberOfRooms = hotel.getNumberOfRooms();
+        this.numberOfRooms = hotel.getRooms().size();
+        this.rooms = RoomResponse.fromRooms(hotel.getRooms());
+
     }
 }

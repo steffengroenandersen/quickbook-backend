@@ -40,9 +40,7 @@ public class Hotel {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "hotel_id")
     List<Room> rooms = new ArrayList<>();
-
-    private int numberOfRooms = rooms.size()+1;
-
+    
     public Hotel(String name, String street, String city, int zip, String country) {
         this.name = name;
         this.street = street;

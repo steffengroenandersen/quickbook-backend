@@ -86,9 +86,9 @@ public class SecurityConfig {
             
             .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/hotels")).hasAuthority("ADMIN") // ADMIN
             
-            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/hotels/{id}/rooms")).permitAll() // ANONYMOUS
-            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.PATCH, "/api/hotels/{id}")).permitAll() // ANONYMOUS
-            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.DELETE, "/api/hotels/{id}")).permitAll() // ANONYMOUS
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/hotels/{id}/rooms")).hasAuthority("ADMIN") // ADMIN
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.PATCH, "/api/hotels/{id}")).hasAuthority("ADMIN") // ADMIN
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.DELETE, "/api/hotels/{id}")).hasAuthority("ADMIN") // ADMIN
 
             
 
