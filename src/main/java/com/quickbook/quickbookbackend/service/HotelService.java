@@ -1,19 +1,14 @@
 package com.quickbook.quickbookbackend.service;
 
-import com.quickbook.quickbookbackend.dto.GuestRequest;
-import com.quickbook.quickbookbackend.dto.GuestResponse;
 import com.quickbook.quickbookbackend.dto.HotelRequest;
 import com.quickbook.quickbookbackend.dto.HotelResponse;
-import com.quickbook.quickbookbackend.entity.Guest;
 import com.quickbook.quickbookbackend.entity.Hotel;
 import com.quickbook.quickbookbackend.repository.HotelRepository;
-import com.quickbook.security.entity.Role;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -44,6 +39,48 @@ public class HotelService {
         }
         
         return new HotelResponse(optionalHotel.get());
+    }
+    
+    public HotelResponse updateHotel(HotelRequest hotelRequest){
+        
+        Integer id = hotelRequest.getId();
+        if (id == null) {
+            throw new NoSuchElementException("Hotel ID is required for update");
+        }
+        
+        Optional<Hotel> optionalHotel = hotelRepository.findById(hotelRequest.getId());        
+        if (optionalHotel.isEmpty()) {
+            throw new NoSuchElementException("Hotel not found with id: " + id);
+        }
+        
+        Hotel savedHotel = optionalHotel.get();
+
+        if (!Objects.equals(hotelRequest.getName(), savedHotel.getName())) {
+            savedHotel.setName(hotelRequest.getName());
+        }
+
+        if (!Objects.equals(hotelRequest.getStreet(), savedHotel.getStreet())) {
+            savedHotel.setStreet(hotelRequest.getStreet());
+        }
+
+        if (!Objects.equals(hotelRequest.getCity(), savedHotel.getCity())) {
+            savedHotel.setCity(hotelRequest.getCity());
+        }
+
+        if (!Objects.equals(hotelRequest.getZip(), savedHotel.getZip())) {
+            savedHotel.setZip(hotelRequest.getZip());
+        }
+
+        if (!Objects.equals(hotelRequest.getCity(), savedHotel.getCountry())) {
+            savedHotel.setCountry(hotelRequest.getCountry());
+        }
+
+        if (!Objects.equals(hotelRequest.getNumberOfRooms(), savedHotel.getNumberOfRooms())) {
+            savedHotel.setNumberOfRooms(hotelRequest.getNumberOfRooms());
+        }
+        
+        hotelRepository.save(savedHotel);
+        return new HotelResponse(savedHotel);
     }
     
 }

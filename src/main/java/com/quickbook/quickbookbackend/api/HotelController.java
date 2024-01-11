@@ -36,4 +36,10 @@ public class HotelController {
         
         return hotelService.createHotel(hotelRequest);
     }
+    
+    @PatchMapping()
+    public HotelResponse updateHotel(@RequestBody HotelRequest hotelRequest){
+        return hotelService.updateHotel(hotelRequest);
+    }
+
 }
