@@ -15,6 +15,7 @@ public class HotelRequest {
     private int zip;
     private String country;
     private int numberOfRooms;
+    
     public static Hotel getHotelEntity(HotelRequest hotelRequest){
         return new Hotel(
                 hotelRequest.getName(),

@@ -81,8 +81,9 @@ public class SecurityConfig {
             .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/guests/pageable")).permitAll() // ANONYMOUS
 
             // HOTEL ENDPOINTS
-            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/hotels")).permitAll() // ANONYMOUS
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/hotels")).hasAuthority("ADMIN") // ANONYMOUS
             .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/hotels")).permitAll() // ANONYMOUS
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/hotels/{id}")).permitAll() // ANONYMOUS
 
             //This is for demo purposes only, and should be removed for a real system
             //.requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/test/user-only")).hasAuthority("USER")

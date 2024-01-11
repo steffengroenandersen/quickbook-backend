@@ -12,6 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 @Service
 public class HotelService {
     
@@ -23,9 +27,23 @@ public class HotelService {
 
     public HotelResponse createHotel(HotelRequest hotelRequest) {
         Hotel newHotel = HotelRequest.getHotelEntity(hotelRequest);
-        
         hotelRepository.save(newHotel);
-       
         return new HotelResponse(newHotel);
     }
+    
+    public List<HotelResponse> getAllHotels(){
+        List<Hotel> hotels = hotelRepository.findAll();
+        return hotels.stream().map((hotel -> new HotelResponse(hotel))).toList();
+    }
+    
+    public HotelResponse getHotel(int id){
+        Optional<Hotel> optionalHotel = hotelRepository.findById(id);
+        
+        if(!optionalHotel.isPresent()){
+            throw new NoSuchElementException("Hotel not found with id: " + id);
+        }
+        
+        return new HotelResponse(optionalHotel.get());
+    }
+    
 }

@@ -25,14 +25,13 @@ public class GuestController {
         System.out.println(guestRequest);
         return guestService.createGuest(guestRequest);
     }
-
-    // ADMIN ENDPOINTS
-    @GetMapping
+    
+    @GetMapping // ADMIN
     public List<GuestResponse> getAllGuests(){
         return guestService.getAllGuests();
     }
 
-    @GetMapping("/pageable")
+    @GetMapping("/pageable") // ADMIN
     public Page<GuestResponse> getAllGuestsPageable(Pageable pageable) {
         System.out.println("getAllGuestsPageable()");
         return guestService.getAllGuestsPageable(pageable);

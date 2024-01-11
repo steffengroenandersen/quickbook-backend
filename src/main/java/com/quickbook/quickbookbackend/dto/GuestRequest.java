@@ -10,15 +10,11 @@ import lombok.*;
 @NoArgsConstructor
 public class GuestRequest {
     private String username;
-
     private String password;
-
     private String email;
-
     private String firstName;
-
     private String lastName;
-
+    
     public static Guest getGuestEntity(GuestRequest guestRequest) {
         return new Guest(guestRequest.username,
                 guestRequest.email,

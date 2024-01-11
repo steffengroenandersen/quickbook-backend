@@ -5,10 +5,9 @@ import com.quickbook.quickbookbackend.dto.GuestResponse;
 import com.quickbook.quickbookbackend.dto.HotelRequest;
 import com.quickbook.quickbookbackend.dto.HotelResponse;
 import com.quickbook.quickbookbackend.service.HotelService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/hotels")
@@ -20,7 +19,17 @@ public class HotelController {
         this.hotelService = hotelService;
     }
 
-    @PostMapping()
+    @GetMapping // ANONYMOUS
+    public List<HotelResponse> getAllHotels(){
+        return hotelService.getAllHotels();
+    }
+    
+    @GetMapping("/{id}") // ANONYMOUS
+    public HotelResponse getHotel(@PathVariable int id){
+        return hotelService.getHotel(id);
+    }
+    
+    @PostMapping() // ADMIN
     public HotelResponse createHotel(@RequestBody HotelRequest hotelRequest){
         System.out.println("createHotel()");
         System.out.println(hotelRequest);
