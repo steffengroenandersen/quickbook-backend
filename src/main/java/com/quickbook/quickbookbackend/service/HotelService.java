@@ -74,13 +74,6 @@ public class HotelService {
         if (!Objects.equals(hotelRequest.getCountry(), savedHotel.getCountry())) {
             savedHotel.setCountry(hotelRequest.getCountry());
         }
-
-        // TODO: Determine how to handle numberOfRooms
-        /*if (!Objects.equals(hotelRequest.getNumberOfRooms(), savedHotel.getNumberOfRooms())) {
-            savedHotel.setNumberOfRooms(hotelRequest.getNumberOfRooms());
-        }
-        
-         */
         
         hotelRepository.save(savedHotel);
         return new HotelResponse(savedHotel);
@@ -95,7 +88,7 @@ public class HotelService {
         Hotel savedHotel = optionalHotel.get();
         
         // TODO: Create ReservationService method that checks of a hotels associated rooms have reservations and return boolean
-        boolean checkHotel = false;
+        boolean checkHotel = true;
         if (checkHotel) {
             //throw new IllegalStateException("Cannot delete hotel with rooms having reservations");
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Cannot delete hotel with rooms having reservations");
@@ -118,8 +111,7 @@ public class HotelService {
         hotelRepository.save(savedHotel);
         
         return new HotelResponse(savedHotel);
-    }    
-    
+    }
 
     
 }

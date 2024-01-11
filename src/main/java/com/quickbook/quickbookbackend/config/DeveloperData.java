@@ -52,7 +52,7 @@ public class DeveloperData implements ApplicationRunner {
         List<Hotel> hotels = generateHotels();
         
         // Generate and save reservations
-        //List<Reservation> reservations = generateReservations(guest1, hotels);
+        List<Reservation> reservations = generateReservations(guest1, hotels);
         
         
                 
@@ -113,7 +113,7 @@ public class DeveloperData implements ApplicationRunner {
         LocalDateTime reservationDate = LocalDateTime.now();
         
         Reservation reservation1 = new Reservation(guest, hotels.get(0).getRooms().get(0), reservationDate);
-        Reservation reservation2 = new Reservation(guest, hotels.get(0).getRooms().get(1), reservationDate);
+        Reservation reservation2 = new Reservation(guest, hotels.get(0).getRooms().get(0), reservationDate);
         Reservation reservation3 = new Reservation(guest, hotels.get(1).getRooms().get(2), reservationDate);
         
         reservations.add(reservation1);

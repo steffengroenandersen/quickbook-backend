@@ -90,9 +90,14 @@ public class SecurityConfig {
             .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.PATCH, "/api/hotels/{id}")).hasAuthority("ADMIN") // ADMIN
             .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.DELETE, "/api/hotels/{id}")).hasAuthority("ADMIN") // ADMIN
 
-            
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/reservations")).permitAll() // ANONYMOUS
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/reservations/room/{roomId}")).permitAll() // ANONYMOUS
 
-            
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/reservations/guest/{guestUsername}")).permitAll() // ANONYMOUS
+
+
+
+
             //This is for demo purposes only, and should be removed for a real system
             //.requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/test/user-only")).hasAuthority("USER")
             //.requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/test/admin-only")).hasAuthority("ADMIN")
