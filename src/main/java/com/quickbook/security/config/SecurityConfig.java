@@ -97,11 +97,7 @@ public class SecurityConfig {
             .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/reservations/room/{roomId}/date/{reservationDate}")).hasAuthority("USER") // USER
             .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.DELETE, "/api/reservations/guest/{reservationId}")).hasAuthority("USER") // USER
             
-
-
-
-
-
+            
             //This is for demo purposes only, and should be removed for a real system
             //.requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/test/user-only")).hasAuthority("USER")
             //.requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/test/admin-only")).hasAuthority("ADMIN")
