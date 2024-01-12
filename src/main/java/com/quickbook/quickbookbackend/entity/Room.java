@@ -36,4 +36,8 @@ public class Room {
         this.roomNumber = roomNumber;
         this.numberOfBeds = numberOfBeds;
     }
+
+    public Room(int numberOfBeds) {
+        this.numberOfBeds = numberOfBeds;
+    }
 }
