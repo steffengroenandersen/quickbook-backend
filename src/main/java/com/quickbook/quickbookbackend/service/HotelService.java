@@ -4,8 +4,10 @@ import com.quickbook.quickbookbackend.dto.HotelRequest;
 import com.quickbook.quickbookbackend.dto.HotelResponse;
 import com.quickbook.quickbookbackend.dto.RoomRequest;
 import com.quickbook.quickbookbackend.entity.Hotel;
+import com.quickbook.quickbookbackend.entity.Reservation;
 import com.quickbook.quickbookbackend.entity.Room;
 import com.quickbook.quickbookbackend.repository.HotelRepository;
+import com.quickbook.quickbookbackend.repository.ReservationRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -17,9 +19,11 @@ import java.util.Optional;
 public class HotelService {
     
     HotelRepository hotelRepository;
+    ReservationRepository reservationRepository;
 
-    public HotelService(HotelRepository hotelRepository) {
+    public HotelService(HotelRepository hotelRepository, ReservationRepository reservationRepository) {
         this.hotelRepository = hotelRepository;
+        this.reservationRepository = reservationRepository;
     }
 
     public HotelResponse createHotel(HotelRequest hotelRequest) {
@@ -116,11 +120,13 @@ public class HotelService {
     private boolean isSaveToDeleteHotel(Hotel hotel){
         boolean isSaveToDelete = true;
         for (Room room : hotel.getRooms()) {
-            // Check if there are reservations for the room
-            if (!room.getReservations().isEmpty()) {
+            List<Reservation> reservationsForRoom = reservationRepository.findByRoomId(room.getId());
+
+            if (!reservationsForRoom.isEmpty()) {
                 return false;
             }
         }
+
         return isSaveToDelete;
-    }
+    }     
 }

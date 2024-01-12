@@ -5,7 +5,6 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
@@ -24,8 +23,6 @@ public class Room {
     private LocalDateTime edited;
     private int roomNumber;
     private int numberOfBeds;
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Reservation> reservations;
 
     public Room(int roomNumber, int numberOfBeds) {
         this.roomNumber = roomNumber;
