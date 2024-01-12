@@ -27,6 +27,14 @@ public class HotelService {
 
     public HotelResponse createHotel(HotelRequest hotelRequest) {
         Hotel newHotel = HotelRequest.getHotelEntity(hotelRequest);
+
+        int numberOfRooms = hotelRequest.getNumberOfRooms();
+        if (numberOfRooms > 0) {
+            for (int roomNumber = 1; roomNumber <= numberOfRooms; roomNumber++) {
+                RoomRequest roomRequest = new RoomRequest(roomNumber);
+                newHotel.addRoom(roomRequest);
+            }
+        }
         hotelRepository.save(newHotel);
         return new HotelResponse(newHotel);
     }

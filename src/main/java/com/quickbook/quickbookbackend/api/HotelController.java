@@ -28,9 +28,6 @@ public class HotelController {
     
     @PostMapping() // ADMIN
     public HotelResponse createHotel(@RequestBody HotelRequest hotelRequest){
-        System.out.println("createHotel()");
-        System.out.println(hotelRequest);
-        
         return hotelService.createHotel(hotelRequest);
     }
     
