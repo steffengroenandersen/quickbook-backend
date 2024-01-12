@@ -4,6 +4,7 @@ import com.quickbook.quickbookbackend.dto.HotelRequest;
 import com.quickbook.quickbookbackend.dto.HotelResponse;
 import com.quickbook.quickbookbackend.dto.RoomRequest;
 import com.quickbook.quickbookbackend.entity.Hotel;
+import com.quickbook.quickbookbackend.entity.Room;
 import com.quickbook.quickbookbackend.repository.HotelRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -90,10 +91,7 @@ public class HotelService {
         
         Hotel savedHotel = optionalHotel.get();
         
-        // TODO: Create ReservationService method that checks of a hotels associated rooms have reservations and return boolean
-        boolean checkHotel = true;
-        if (checkHotel) {
-            //throw new IllegalStateException("Cannot delete hotel with rooms having reservations");
+        if(!isSaveToDeleteHotel(savedHotel)){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Cannot delete hotel with rooms having reservations");
         }
         
@@ -113,5 +111,16 @@ public class HotelService {
         hotelRepository.save(savedHotel);
         
         return new HotelResponse(savedHotel);
+    }
+    
+    private boolean isSaveToDeleteHotel(Hotel hotel){
+        boolean isSaveToDelete = true;
+        for (Room room : hotel.getRooms()) {
+            // Check if there are reservations for the room
+            if (!room.getReservations().isEmpty()) {
+                return false;
+            }
+        }
+        return isSaveToDelete;
     }
 }
