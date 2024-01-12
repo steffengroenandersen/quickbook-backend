@@ -56,12 +56,12 @@ public class DeveloperData implements ApplicationRunner {
         guestRepository.save(guest2);
         
         // Generate and save hotels and rooms
-       // List<Hotel> hotels = generateHotels();
+        List<Hotel> hotels = generateHotels();
         
-       // List<Guest> guestList = Arrays.asList(guest1, guest2);
+        List<Guest> guestList = Arrays.asList(guest1, guest2);
         
         // Generate and save reservations
-        //List<Reservation> reservations = generateReservations(guestList, hotels);
+        List<Reservation> reservations = generateReservations(guestList, hotels);
         
     }
     
