@@ -3,8 +3,6 @@ package com.quickbook.quickbookbackend.api;
 import com.quickbook.quickbookbackend.dto.GuestRequest;
 import com.quickbook.quickbookbackend.dto.GuestResponse;
 import com.quickbook.quickbookbackend.service.GuestService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,8 +10,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/guests")
 public class GuestController {
+    
     GuestService guestService;
-
+    
     public GuestController(GuestService guestService) {
         this.guestService = guestService;
     }

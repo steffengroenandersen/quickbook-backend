@@ -11,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.util.List;
 
 @Service
@@ -28,6 +27,7 @@ public class GuestService {
         List<GuestResponse> response = guests.stream().map((guest -> new GuestResponse(guest))).toList();
         return response;
     }
+    
     public GuestResponse createGuest(GuestRequest guestRequest) {
         Guest guest = GuestRequest.getGuestEntity(guestRequest);
 

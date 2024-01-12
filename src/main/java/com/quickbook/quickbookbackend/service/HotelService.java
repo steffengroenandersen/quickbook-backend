@@ -4,15 +4,11 @@ import com.quickbook.quickbookbackend.dto.HotelRequest;
 import com.quickbook.quickbookbackend.dto.HotelResponse;
 import com.quickbook.quickbookbackend.dto.RoomRequest;
 import com.quickbook.quickbookbackend.entity.Hotel;
-import com.quickbook.quickbookbackend.entity.Room;
 import com.quickbook.quickbookbackend.repository.HotelRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -58,7 +54,6 @@ public class HotelService {
         Optional<Hotel> optionalHotel = hotelRepository.findById(id);        
         if (optionalHotel.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hotel not found with id: " + id);
-
         }
         
         Hotel savedHotel = optionalHotel.get();
@@ -108,18 +103,15 @@ public class HotelService {
     
     public HotelResponse createRoom(Integer id, RoomRequest roomRequest){
         Optional<Hotel> optionalHotel = hotelRepository.findById(id);
+        
         if (optionalHotel.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hotel not found with id: " + id);
         }
 
         Hotel savedHotel = optionalHotel.get();
-        
         savedHotel.addRoom(roomRequest);
-        
         hotelRepository.save(savedHotel);
         
         return new HotelResponse(savedHotel);
     }
-
-    
 }

@@ -7,7 +7,6 @@ import com.quickbook.quickbookbackend.entity.Room;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter

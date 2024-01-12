@@ -14,18 +14,15 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RoomResponse {
-    private int roomId;  // Added roomId
+    private int roomId;
     private int roomNumber;
     private int numberOfBeds;
-
-    // Additional room-related properties can be added here
-
+    
     public static RoomResponse fromRoom(Room room) {
         return RoomResponse.builder()
-                .roomId(room.getId())  // Set the roomId
+                .roomId(room.getId())
                 .roomNumber(room.getRoomNumber())
                 .numberOfBeds(room.getNumberOfBeds())
-                // Map other properties if needed
                 .build();
     }
 

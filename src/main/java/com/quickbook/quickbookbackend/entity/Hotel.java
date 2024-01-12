@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,22 +20,15 @@ public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
     @CreationTimestamp
     private LocalDateTime created;
-
     @UpdateTimestamp
     private LocalDateTime edited;
-
     private String name;
     private String street;
     private String city;
     private int zip;
     private String country;
-    
-    
-
-
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "hotel_id")
     List<Room> rooms = new ArrayList<>();

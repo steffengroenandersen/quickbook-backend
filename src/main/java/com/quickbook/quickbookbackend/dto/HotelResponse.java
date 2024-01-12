@@ -20,9 +20,7 @@ public class HotelResponse {
     private int zip;
     private String country;
     private int numberOfRooms;
-
     private List<RoomResponse> rooms;
-
 
     public HotelResponse(Hotel hotel) {
         this.id = hotel.getId();
