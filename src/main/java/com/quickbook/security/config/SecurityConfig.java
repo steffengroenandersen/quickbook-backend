@@ -72,30 +72,31 @@ public class SecurityConfig {
 
             //Allow index.html and everything else on root level. So make sure to put ALL your endpoints under /api
             .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET,"/*")).permitAll()
-
             .requestMatchers(mvcMatcherBuilder.pattern("/error")).permitAll()
             
-            // USER ENDPOINTS
-            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/guests")).permitAll() // ANONYMOUS
-
-            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/guests/pageable")).permitAll() // ANONYMOUS
-
+            
+            // GUEST ENDPOINTS
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/guests")).hasAuthority("ADMIN") // ADMIN 
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/guests")).permitAll() // ANONYMOUS 
+            
+            
             // HOTEL ENDPOINTS
-            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/hotels")).permitAll() // ANONYMOUS
-            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/hotels/{id}")).permitAll() // ANONYMOUS
-            
-            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/hotels")).hasAuthority("ADMIN") // ADMIN
-            
-            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/hotels/{id}/rooms")).hasAuthority("ADMIN") // ADMIN
-            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.PATCH, "/api/hotels/{id}")).hasAuthority("ADMIN") // ADMIN
-            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.DELETE, "/api/hotels/{id}")).hasAuthority("ADMIN") // ADMIN
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/hotels")).permitAll() // ANONYMOUS 
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/hotels/{id}")).permitAll() // ANONYMOUS 
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/hotels")).hasAuthority("ADMIN") // ADMIN 
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/hotels/{id}/rooms")).hasAuthority("ADMIN") // ADMIN 
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.PATCH, "/api/hotels/{id}")).hasAuthority("ADMIN") // ADMIN 
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.DELETE, "/api/hotels/{id}")).hasAuthority("ADMIN") // ADMIN 
 
-            // RESERVATION ENDPOINTS
-            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/reservations")).permitAll() // ANONYMOUS
-            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/reservations/room/{roomId}")).permitAll() // ANONYMOUS
-            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/reservations/guest/{guestUsername}")).permitAll() // ANONYMOUS
             
-            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.DELETE, "/api/reservations/guest/{reservationId}")).hasAuthority("USER") // ANONYMOUS
+            // RESERVATION ENDPOINTS
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/reservations")).hasAuthority("ADMIN") // ADMIN 
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/reservations/room/{roomId}")).hasAuthority("USER") // USER
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/reservations/guests")).hasAuthority("USER") // USER
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/reservations/guests/{guestUsername}")).hasAuthority("USER") // USER 
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/reservations/room/{roomId}/date/{reservationDate}")).hasAuthority("USER") // USER
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.DELETE, "/api/reservations/guest/{reservationId}")).hasAuthority("USER") // USER
+            
 
 
 

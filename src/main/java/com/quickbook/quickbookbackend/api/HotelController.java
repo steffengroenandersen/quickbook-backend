@@ -20,7 +20,6 @@ public class HotelController {
     public List<HotelResponse> getAllHotels(){
         return hotelService.getAllHotels();
     }
-    
     @GetMapping("/{id}") // ANONYMOUS
     public HotelResponse getHotel(@PathVariable int id){
         return hotelService.getHotel(id);
@@ -30,21 +29,19 @@ public class HotelController {
     public HotelResponse createHotel(@RequestBody HotelRequest hotelRequest){
         return hotelService.createHotel(hotelRequest);
     }
+    @PostMapping("/{id}/rooms") // ADMIN
+    public HotelResponse createRoom(@PathVariable Integer id, @RequestBody RoomRequest roomRequest){
+        return hotelService.createRoom(id, roomRequest);
+    }
     
-    @PatchMapping("/{id}")
+    @PatchMapping("/{id}") // ADMIN
     public HotelResponse updateHotel(@PathVariable Integer id, @RequestBody HotelRequest hotelRequest){
         return hotelService.updateHotel(id, hotelRequest);
     }
     
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}") // ADMIN
     public HotelResponse deleteHotel(@PathVariable Integer id){
         return hotelService.deleteHotel(id);
+        
     }
-    
-    @PostMapping("/{id}/rooms")
-    public HotelResponse createRoom(@PathVariable Integer id, @RequestBody RoomRequest roomRequest){
-        return hotelService.createRoom(id, roomRequest);
-    }
-
-    
 }

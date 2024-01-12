@@ -30,10 +30,4 @@ public class GuestController {
     public List<GuestResponse> getAllGuests(){
         return guestService.getAllGuests();
     }
-
-    @GetMapping("/pageable") // ADMIN
-    public Page<GuestResponse> getAllGuestsPageable(Pageable pageable) {
-        System.out.println("getAllGuestsPageable()");
-        return guestService.getAllGuestsPageable(pageable);
-    }
 }
